@@ -3,6 +3,7 @@
 	padding:0;
 	--border-width:0.1em;
 	font-size:min( calc( max(1vh,1vw) * 2 ), 20px);
+	--user-name-color:blue;
 	
 }
 
@@ -32,6 +33,12 @@ p{
 	word-wrap:break-word;
 	word-break:normal;
 }
+
+#input_div::before{
+	content:attr(data-username);
+	color:var(--user-name-color);
+}
+
 
 #input_div{
 	margin-top:0.5em;

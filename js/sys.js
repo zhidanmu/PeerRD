@@ -13,7 +13,7 @@ let sys=(function(){
 	});
 	
 	
-	function chat_print({speaker='default_speaker',text='default_text',speaker_color='blue',time=(new Date().toLocaleString())}){
+	function chat_print({speaker='default_speaker',speaker_color=color_option.user,text='default_text',text_color=color_option.text,time=(new Date().toLocaleString())}){
 		text=text.replaceAll('\n','<br>');
 		let p=document.createElement("p");
 		let sp=document.createElement('div');
@@ -21,6 +21,7 @@ let sys=(function(){
 		
 		sp.style.color=speaker_color;
 		sp.innerHTML=speaker+'  '+time;
+		tx.style.color=text_color;
 		tx.innerHTML=text;
 		p.appendChild(sp);
 		p.appendChild(tx);
@@ -31,53 +32,29 @@ let sys=(function(){
 		}
 	}
 	
+	function chat_sys_info(txt){
+		chat_print({speaker:'-SYSTEM-',text:txt,text_color:color_option.sys,speaker_color:color_option.sys,time:(new Date().toLocaleString())});
+	}
+	
+	function chat_sys_err(txt){
+		chat_print({speaker:'-ERROR-',text:txt,text_color:color_option.err,speaker_color:color_option.err,time:(new Date().toLocaleString())});
+	}
+	
 	function input_div_addEventListener(e,func){
 		input_div.addEventListener(e,func);
 	}
 	
+	function set_user_name(name){
+		input_div.setAttribute('data-username',name);
+	}
+	
 	return {
 		chat_print:chat_print,
-		input_div_addEventListener:input_div_addEventListener
-		
+		chat_sys_info:chat_sys_info,
+		chat_sys_err:chat_sys_err,
+		input_div_addEventListener:input_div_addEventListener,
+		set_user_name:set_user_name
 	}
 })();
 
 
-(()=>{
-	sys.chat_print({speaker:'SYSTEM',speaker_color:'red',text:lan['double_enter_send']});
-})();
-
-
-
-
-
-
-
-
-
-
-(
-()=>{
-	let enter_timestamp=0;
-	sys.input_div_addEventListener('keydown',(event)=>{
-		if(event.keyCode==13){
-			let timestamp=Date.now();
-			if(timestamp-enter_timestamp<500){
-				let content=input_div.innerHTML;
-				content=content.replaceAll('<div>','<br>');
-				content=content.replaceAll('</div>','');
-				content=content.replaceAll('<br>','\n');
-				content=content.trim();
-				if(content!=""){
-					//TODO
-					sys.chat_print({speaker:'local',speaker_color:'purple',text:content});
-					input_div.innerHTML="";
-				}
-				event.preventDefault();
-			}
-			enter_timestamp=timestamp;
-			return false;
-		}
-	});
-}
-)();
