@@ -2,14 +2,14 @@
 let sys=(function(){
 	const chat_div=document.getElementById("chat_div");
 	const input_div=document.getElementById("input_div");
-	const send_btn=document.getElementById('send_btn');
+	const menu_div=document.getElementById("menu_div");
 	
-	let mouse_on_chat_div=0;
-	chat_div.addEventListener("mouseover",(event)=>{
-		mouse_on_chat_div=1;
+	let chat_div_focus=0;
+	chat_div.addEventListener("focus",(event)=>{
+		chat_div_focus=1;
 	});
-	chat_div.addEventListener("mouseleave",(event)=>{
-		mouse_on_chat_div=0;
+	chat_div.addEventListener("blur",(event)=>{
+		chat_div_focus=0;
 	});
 	
 	
@@ -27,7 +27,7 @@ let sys=(function(){
 		p.appendChild(tx);
 		
 		chat_div.appendChild(p);
-		if(mouse_on_chat_div==0){
+		if(chat_div_focus==0){
 			chat_div.scrollTop = chat_div.scrollHeight;
 		}
 	}
@@ -44,16 +44,11 @@ let sys=(function(){
 		input_div.addEventListener(e,func);
 	}
 	
-	function set_user_name(name){
-		input_div.setAttribute('data-username',name);
-	}
-	
 	return {
 		chat_print:chat_print,
 		chat_sys_info:chat_sys_info,
 		chat_sys_err:chat_sys_err,
-		input_div_addEventListener:input_div_addEventListener,
-		set_user_name:set_user_name
+		input_div_addEventListener:input_div_addEventListener
 	}
 })();
 

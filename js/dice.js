@@ -1,7 +1,7 @@
 let dice=(()=>{
 	
 	let default_dice_type=6;
-	let default_dice_num=1;
+	let default_dice_num=2;
 	
 	function getRandomInt(min, max) {
 	  return Math.floor(Math.random() * (max - min + 1 ) + min); 
@@ -71,9 +71,8 @@ let dice=(()=>{
 		let diceReg=/((\d)*d(\d)*)/g;
 		
 		let dexpr=expr.match(diceExprReg);
-		if(!dexpr||dexpr.length<=0){
-			alert(lan['cmd_error']);
-			return;
+		if(!dexpr||dexpr.length<=0||!dexpr[0]){
+			throw new Error(lan['cmd_error']);
 		}
 		dexpr=dexpr[0];
 		let suffix=expr.replace(dexpr,'');

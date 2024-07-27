@@ -1,10 +1,12 @@
 let lan=(()=>{
 	let lans={
 		'zh':{
-			'double_enter_send':'双击回车发送消息',
+			'double_enter_send':'下方输入框可双击回车发送消息',
 			'roll_dice':'[掷骰]',
-			'cmd_error':'指令错误',
-			'change_name':'更改姓名为'
+			'cmd_error':'指令解析失败',
+			'change_name':'更名为',
+			'user_name_info':'当前用户名:',
+			'fail_to_send':'发送失败'
 		}
 	}
 	

@@ -5,7 +5,6 @@ let cmd=(()=>{
 		let ret;
 		ret="\""+user.get('user_name')+"\""+lan['change_name']+"\""+nn+"\""
 		user.set('user_name',nn);
-		sys.set_user_name(name);
 		return ret;
 	}
 	
@@ -33,7 +32,6 @@ let cmd=(()=>{
 		ret+="</span>";
 		return ret;
 	}
-	
 	
 	return {
 		handle:handle

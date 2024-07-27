@@ -1,9 +1,3 @@
-(()=>{
-	sys.chat_sys_info(lan['double_enter_send']);
-})();
-
-
-
 (
 ()=>{
 	let enter_timestamp=0;
@@ -17,9 +11,20 @@
 				content=content.replaceAll('<br>','\n');
 				content=content.trim();
 				if(content!=""){
-					//TODO
-					let str=cmd.handle(content);
-					sys.chat_print({speaker:user.get('user_name'),text:str});
+					try{
+						let str=cmd.handle(content);
+						
+						let message_obj={speaker:user.get('user_name'),text:str,text_color:color_option.text,speaker_color:color_option.user,time:(new Date().toLocaleString())}
+						//TODO send_message
+						
+						
+						
+						
+						sys.chat_print(message_obj);
+					}catch(e){
+						console.log(e);
+						alert(e);
+					}
 					input_div.innerHTML="";
 				}
 				event.preventDefault();
