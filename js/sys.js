@@ -43,7 +43,18 @@ let sys=(function(){
 	function input_div_addEventListener(e,func){
 		input_div.addEventListener(e,func);
 	}
+		
+	(()=>{
+		function setVH() {
+		  let VH = window.innerHeight / 100;
+		  document.documentElement.style.setProperty('--vh', VH + 'px');
+		}
+		let i = 'orientationchange' in window ? 'orientationchange' : 'resize';
+		document.addEventListener('DOMContentLoaded', setVH);
+		window.addEventListener(i,setVH);
+	})();
 	
+
 	return {
 		chat_print:chat_print,
 		chat_sys_info:chat_sys_info,

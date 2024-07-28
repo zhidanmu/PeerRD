@@ -15,12 +15,10 @@
 						let str=cmd.handle(content);
 						
 						let message_obj={speaker:user.get('user_name'),text:str,text_color:color_option.text,speaker_color:color_option.user,time:(new Date().toLocaleString())}
-						//TODO send_message
 						
-						
-						
-						
+						rtc.send(JSON.stringify(message_obj));
 						sys.chat_print(message_obj);
+						
 					}catch(e){
 						console.log(e);
 						alert(e);
