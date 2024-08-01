@@ -29,7 +29,7 @@ let cmd=(()=>{
 	}
 	
 	function _r(dexpr){
-		let ret=dice.evalDiceExpr(dexpr);
+		let ret=dice.evalMultiDiceExpr(dexpr);
 		return ret;
 	}
 	
@@ -74,6 +74,7 @@ let cmd=(()=>{
 		let ret='';
 		for(let k in handers){
 			let h_=handers[k];
+			ret+="----"+k+"----<br>";
 			for(let i=0;i<h_.length;i++){
 				ret+=(lan['description'].replace('{cmd}',h_[i].cmd).replace('{description}',h_[i].description));
 				ret+='<br>';

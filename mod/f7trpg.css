@@ -1,0 +1,17 @@
+.opa{
+	opacity:0.6;
+	background-color:white;
+}
+
+
+.opa:focus{
+	opacity:1;
+	background-color:white;
+}
+
+
+.opa:focus-within{
+	opacity:1;
+	background-color:white;
+}
+
