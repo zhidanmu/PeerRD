@@ -88,6 +88,15 @@ let cmd=(()=>{
 	let handers={
 		common:[
 		{
+			cmd:'.help',
+			func:(arg)=>{
+				let ret=_help(arg);
+				return ret;
+			},
+			description:lan.cmd_description['.help'],
+			not_send:true//do not send results to other peers
+		},
+		{
 			cmd:'.nn',//cmd
 			func:(arg)=>{
 				return _nn(arg);
@@ -129,15 +138,6 @@ let cmd=(()=>{
 				return ret.str;
 			},
 			description:lan.cmd_description['.r']
-		},
-		{
-			cmd:'.help',
-			func:(arg)=>{
-				let ret=_help(arg);
-				return ret;
-			},
-			description:lan.cmd_description['.help'],
-			not_send:true//do not send results to other peers
 		}
 	]};
 	
