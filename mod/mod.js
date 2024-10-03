@@ -3,7 +3,7 @@
 	const mod_path='mod/{mod_name}.js';
 	
 	const mod_list=[
-		'f7trpg'
+		'f7trpg','ws_server'
 	];
 	
 	for(let i=0;i<mod_list.length;i++){

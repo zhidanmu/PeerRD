@@ -1,4 +1,4 @@
-function send_message(content){
+function std_send_message(content){
 	if(content!=""){
 		try{
 			let cmd_res=cmd.handle(content.trim());
@@ -17,6 +17,8 @@ function send_message(content){
 		}
 	}
 }
+
+let send_message=std_send_message;
 
 
 (
