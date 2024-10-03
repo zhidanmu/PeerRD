@@ -57,6 +57,7 @@ let history_logger=(()=>{
   function log(message_obj){
     let speaker=message_obj.speaker;
     let text=message_obj.text;
+    text=text.replace(/<br>/g,';');
     text=text.replace(/<[^>]+>/g,'');
     let log_str="["+speaker+"]:"+text+"\n";
 
