@@ -41,6 +41,18 @@ let ws_server=(()=>{
 		heartbeatTimer=setTimeout(send_heartbeat,heartbeatInterval)
 	}
 
+	function file_download(data){
+		let a_tag=document.createElement('a');
+		let blob = new Blob([data], {type: "text/plain;charset=utf-8"});
+ 	    let file_url = URL.createObjectURL(blob);
+  		a_tag.href =file_url;
+		a_tag.download = "log.txt";
+		a_tag.click()
+		URL.revokeObjectURL(file_url)
+		a_tag.remove();
+	}
+
+
 	function _ws(arg){
 		let baseURL=arg.trim();
 		if(!baseURL||baseURL==''){
@@ -68,6 +80,9 @@ let ws_server=(()=>{
 					recv_heartbeat();
 				}else if(message.type=='text'){
 					stdout(message);
+				}else if(message.type=='logfile'){
+					let data=message.data;
+					file_download(data);
 				}
 			}
 

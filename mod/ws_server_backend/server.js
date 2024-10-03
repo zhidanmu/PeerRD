@@ -1,8 +1,8 @@
 //use NodeJs
 //use ws
-const port=8085;
 const WebSocket = require('ws');
-
+const fs = require('fs');
+const port=8085;
 const server = new WebSocket.Server({ port: port, path: '/api/ws' });
 
 let socket_list={};
@@ -26,12 +26,65 @@ function get_name_list(){
   return str;
 }
 
+let history_logger=(()=>{
+
+  let file_name="log_"+Date.now().toString();
+  let file_path="log/"+file_name;
+
+  function init(){
+    fs.writeFile(file_path, file_name+'\n', (err) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      console.log('logfile '+file_name+' created');
+    });
+  }
+
+  function get_history(socket){
+    fs.readFile(file_path,"utf8",(err,data)=>{
+      if(err){
+        console.log(err);
+        server_info_send("获取log文件失败");
+        return;
+      }
+
+      socket.send(JSON.stringify({data:data,type:"logfile"}));
+
+    });
+  }
+
+  function log(message_obj){
+    let speaker=message_obj.speaker;
+    let text=message_obj.text;
+    let log_str="["+speaker+"]:"+text+"\n";
+
+    fs.appendFile(file_path,log_str,(err)=>{
+      console.log(err);
+    });
+  }
+
+  return {
+    init:init,
+    get_history:get_history,
+    log:log
+  }
+})();
+
+history_logger.init();
+
+
 function try_cmds(str,socket){
   let isCmd=false;
   if(str.startsWith('.member')){
     server_info_send(socket,get_name_list());
     isCmd=true;
+  }else if(str.startsWith(".history")){
+    history_logger.get_history(socket);
+    isCmd=true;
   }
+
+
   return isCmd;
 }
 
@@ -71,6 +124,8 @@ server.on('connection', (socket) => {
             socket_list[id].send(JSON.stringify(message));
         }
 
+        history_logger.log(message);
+
         if(first_time_connect){
           server_info_send(socket,get_name_list());
           first_time_connect=false;
@@ -86,6 +141,7 @@ server.on('connection', (socket) => {
     for(let id in socket_list){
       server_info_send(socket_list[id],nn+"下线");
     }
+    history_logger.log({speaker:"-SERVER-",text:nn+'下线'})
   });
 });
 
