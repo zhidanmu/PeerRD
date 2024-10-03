@@ -93,6 +93,9 @@ let ws_server=(()=>{
 					}
 				}
 			}
+
+			send_message("---"+user.get('user_name')+"连接至服务器---");
+
 		}
 
 		

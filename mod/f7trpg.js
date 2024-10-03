@@ -158,9 +158,10 @@ let f7trpg=(()=>{
 					let career=$(attr_id_str.replace("{attr}",'career')).value;
 					let career_data=career_attr_table[career];
 					
-					let ev = document.createEvent("HTMLEvents");
-					ev.initEvent('change',false,true);
-					
+					//let ev = document.createEvent("HTMLEvents");
+					//ev.initEvent('change',false,true);
+					let ev=new Event('change');
+
 					if(!career_data){
 						$(attr_id_str.replace("{attr}",'career')).value="战士";
 						$(attr_id_str.replace("{attr}",'career')).dispatchEvent(ev);
